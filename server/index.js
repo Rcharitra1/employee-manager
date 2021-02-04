@@ -1,4 +1,4 @@
-
+require('dotenv').config();
 /*
     Node server
     Common js
@@ -25,12 +25,23 @@ const path = require('path');
 
 const app = express();
 
-const port = process.env.PORT || 3500;
 
+
+
+
+
+const options = {
+    dotfiles: 'ignore',
+    extensions: ['htm', 'html']
+    }
+
+    const port = process.env.PORT || 3500;
 
 //setting up the static files to server http://localhost:3500/file.html
+//req ---> url http://localhost:3000/endpoint
+//endpoint (.ext ignored index.html !=null)
 
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, '../client'),options));
 
 // app.use(express.static(__dirname, '../public/signup.html'))
 
@@ -43,10 +54,13 @@ app.get('/', (req, res, next)=> {
     res.send("Text3")
 })
 
+//Middle ware  tryies to match the endpoint
 
 app.get('/api/v1/employees', (req, res)=>{
     res.json({Employee:'Employee page'});
 })
+
+//Middle ware 404 tries as the last middleware
 
 app.use((req, res)=>{
     res.sendFile(path.join(__dirname, '../client/404.html'))
