@@ -9,6 +9,8 @@ const path = require('path')
 
 // create an instance of express
 const app = express()
+
+const becrypt=require('bcryptjs');
  
 // read the value of PORT NODE_EVN variable in the .env file
 // when the index.js file starts up this file is read in and
@@ -35,7 +37,28 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
  // login route.
  app.post('/login', (req, res)=>{
    console.log(req.body)
-   res.send("trying to login")
+   let {email, password}= req.body;
+
+   let user ={
+     email,
+     password
+   }
+
+
+   becrypt.genSalt(10, (err, salt)=>{
+     becrypt.hash(password, salt, (err, hash)=>{
+       if(err)
+       {
+         throw err;
+       }
+       user.password=hash;
+
+       console.log(user);
+       res.sendFile(path.join(__dirname, '../client/dashboard.html'))
+     })
+   })
+
+  //  res.send("trying to login")
  })
 
 // Final Middleware 
@@ -52,3 +75,5 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`server started on http://localhost:5000`);
 });
+
+
