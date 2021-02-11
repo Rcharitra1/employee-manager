@@ -1,79 +1,54 @@
-require('dotenv').config();
-/*
-    Node server
-    Common js
-    Browser has no idea what they are, they are not supported in browser
-    require -- importing functionality
-    module.exports--- export functionality const, fun
-    , object, arrays
-
-
-    Front End
-
-    Use node_modules npm install xxxx there not supported by the browser Bundler
-    parcel builder
-    package.json parcel ./src/index.html
-                 import nodeModules ====> js the browser understands
-    Web server
-        --> Javascript node
-        --> listen http request
-*/
-
+// require dotenv package to read the properties in the .env file.
+// never upload .env file to git.
+require('dotenv').config()
+//import the express module
 const express = require('express');
+// import the path utils from Node.
+const path = require('path')
+ 
 
-const path = require('path');
+// create an instance of express
+const app = express()
+ 
+// read the value of PORT NODE_EVN variable in the .env file
+// when the index.js file starts up this file is read in and
+// we can set configuration variables for the application.
+// never upload to git...
+const PORT =  process.env.PORT || 5000 
 
-const app = express();
-
-
-
-
-
-
-const options = {
-    dotfiles: 'ignore',
-    extensions: ['htm', 'html']
-    }
-
-    const port = process.env.PORT || 3500;
-
-//setting up the static files to server http://localhost:3500/file.html
-//req ---> url http://localhost:3000/endpoint
-//endpoint (.ext ignored index.html !=null)
-
-app.use(express.static(path.join(__dirname, '../client'),options));
-
-// app.use(express.static(__dirname, '../public/signup.html'))
-
-/**
- *  /root folder localhost:3500
- */
+ 
 
 
-app.get('/', (req, res, next)=> {
-    res.send("Text3")
-})
+//To get access to the name value pairs send in the message Body of POST Request.
+ app.use(express.urlencoded({extended:true}))
+ app.use(express.json())
 
-//Middle ware  tryies to match the endpoint
 
-app.get('/api/v1/employees', (req, res)=>{
-    res.json({Employee:'Employee page'});
-})
+//Middleware Serving Static Pages from client directory
+// second parameter is an configuration object of how we want
+// the static file server to run.
+app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 'htm']})
+);
 
-//Middle ware 404 tries as the last middleware
+ 
+ // Routing Middleware.  
+ // login route.
+ app.post('/login', (req, res)=>{
+   console.log(req.body)
+   res.send("trying to login")
+ })
 
-app.use((req, res)=>{
-    res.sendFile(path.join(__dirname, '../client/404.html'))
+// Final Middleware 
+// Catch all for any request not handled while express was
+// processing requests. 
+// Returns 404 Page from the client directory.
+app.use((req, res) => {
+  res.status(404).sendFile(path.join(__dirname, "../client/404.html"));
 });
 
-app.listen(port, ()=> {console.log(`Server on ${port}`)
-})
 
 
-
-
-
-
-
-
-
+// Tell express app to listen for incomming request on a specific PORT
+app.listen(PORT, () => {
+  console.log(`server started on http://localhost:5000`);
+});

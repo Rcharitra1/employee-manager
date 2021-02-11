@@ -2,49 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>Sign Up Form</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1 class="text-center display-4">Register</h1>
-        <div class="row my-2">
-            <form>
-                <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label">Email address</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-                </div>
-                
-                  <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" aria-describedby="emailHelp">
-                  
-                  </div>
+  <nav class="navbar">
+    <ul >
+        <li><a href="index.html">home</a></li>
+        <li><a href="login.html">account login</a></li>
+    </ul>
+</nav>
 
+      <aside class="app-form">
+        <header><h2 class="center">Sign Up For Your Free Trial Account</h2></header>
+          <form id="register">
+       
+            <div class="form-control">
+                <label for="fullname">Please enter your full name.</label>
+                <input id="fullname" type="text" name="fullname" placeholder="first and last name" value="jim foley"/>
+            </div>
+              <div class="form-control">
+                  <label for="email">Enter an valid email address</label>
+                  <input id="email" type="text" name="email" placeholder="email address for the account" value="email@workspace.com"/>
+              </div>
 
-                  <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Address</label>
-                    <input type="text" class="form-control" id="address" aria-describedby="emailHelp">
-                   
-                  </div>
-                <div class="mb-3">
-                  <label for="exampleInputPassword1" class="form-label">Password</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1">
-                </div>
-                <div class="mb-3 form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                  <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                </div>
+              <div class="form-control">
+                <label for="password">Enter a secure password</label>
+                <input id="password" type="text" name="password" placeholder="password for the account" value="temp"/>
+            </div>
 
-               
-                
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <a href="login.html">Already registered? </a>
-              </form>
-        </div>
-    </div>
-  
+            <div class="form-control">
+             <button type="submit">create account</button>
+            </div>
+          </form>
+      </aside>
 </body>
 </html>
