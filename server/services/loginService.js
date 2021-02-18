@@ -14,13 +14,40 @@
     }
 */
 
-const fileService = require('./fileService');
- const authenticate = (credentials) =>{
+const becrypt = require('bcryptjs');
+const userExists = require('./userExists');
+
+exports.authenticate = (credentials) =>{
     const {email, password} = {...credentials};
-    const users = fileService.getFileContents('../data/users.json');
-    console.log(users);
-    console.log(email, password)
+    
+    let user= {email, password};
+    
+    let userFound = userExists.findUser( user);
+
+    if(userFound)
+    {
+        let response=checkPassword(userFound, user);
+        console.log(response);
+        if(response)
+        {   
+            return userFound;
+        }else
+        {
+           return userFound.errors={message: 'password dont match'};
+        }
+    }
+
+    return userFound;
 
  } 
+ function checkPassword(userFound, user)
+  {
+      let {password}={...user};
+      let response;
+      response = becrypt.compareSync(password, userFound.password)
+      return response;
+  }
 
- authenticate({email:'user@gmail.com', password:'123456'})
+ 
+
+//  authenticate({email:'charitra@gmail.com', password:'123'})
