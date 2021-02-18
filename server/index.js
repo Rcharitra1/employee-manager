@@ -21,7 +21,6 @@ const userExists= require('./services/userExists.js');
 
 
 //login function 
-
 const loginService = require('./services/loginService.js');
 
 //get all users
@@ -52,7 +51,7 @@ app.use(session({
   cookie: { secure: true }
 }))
 
-//Middleware Serving Static Pages from client directory
+// Middleware Serving Static Pages from client directory
 // second parameter is an configuration object of how we want
 // the static file server to run.
 app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 'htm']})
@@ -62,7 +61,7 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
 
  // Routing Middleware.  
  // login route.
- app.post('/login',body('email').isEmail().withMessage('please provide a valid email'), body('password').isString({min:6, max:10}).withMessage('password is between 6 to 10 characters') , (req, res)=>{
+ app.post('/api/login',body('email').isEmail().withMessage('please provide a valid email'), body('password').isLength({min:6, max:10}).withMessage('password is between 6 to 10 characters') , (req, res)=>{
    let {email, password}= req.body;
    let loginUser = {
      email,
@@ -78,11 +77,11 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
 
     let user = loginService.authenticate(loginUser);
 
-    console.log(req.session.id)
+    // console.log(req.session.id)
     res.status(200).json({user})
 
     // console.log(user);
-    // res.sendFile(path.join(__dirname, '../client/dashboard.html'))
+    // res.sendFile(path.join(__dirname, '../client/view/dashboard.ejs'))
    }
 
   
@@ -95,7 +94,7 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
 
 //error checking using express - validator
 
- app.post('/signup',body('fullname').isLength({min:1, max:30}).withMessage('The name needs to be between 1 and 30 characters'), body('email').isEmail().withMessage('pls provide a valid email'), body('password').isLength({min:6, max:10}).withMessage('provide a password between 6 and 10 characters') , (req, res)=>{
+ app.post('/api/signup',body('fullname').isLength({min:1, max:30}).withMessage('The name needs to be between 1 and 30 characters'), body('email').isEmail().withMessage('pls provide a valid email'), body('password').isLength({min:6, max:10}).withMessage('provide a password between 6 and 10 characters') , (req, res)=>{
  
 
   const {fullname, email, password}=req.body;
@@ -137,13 +136,9 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
 //Get all users
 
 
-app.get('/users', (req, res)=>{
-
-  if(req.session.id)
-  {
+app.get('/api/users', (req, res)=>{
     res.status(200).json(getUsers.getAllUsers())
-    console.log(req.session.id);
-  }    
+      
 })
 
 // Final Middleware 
@@ -159,7 +154,7 @@ app.use((req, res) => {
 // Tell express app to listen for incomming request on a specific PORT
 
 app.listen(PORT, () => {
-  console.log(`server started on http://localhost:5000`);
+  console.log(`server started on http://localhost:${PORT}`);
 });
 
 
