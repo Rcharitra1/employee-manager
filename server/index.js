@@ -19,13 +19,14 @@ const registerService = require('../server/services/registerService.js');
 //check if user exists
 const userExists= require('./services/userExists.js');
 
-//Get UUID
-
-const {v4: uuidv4} = require('uuid');
 
 //login function 
 
 const loginService = require('./services/loginService.js');
+
+//get all users
+
+const getUsers = require('../server/services/getUsers.js')
 
 //get express-session
 
@@ -37,15 +38,19 @@ const session = require('express-session');
 // never upload to git...
 const PORT =  process.env.PORT || 5000 
 
- 
-
 
 //To get access to the name value pairs send in the message Body of POST Request.
  app.use(express.urlencoded({extended:true}))
  app.use(express.json())
-//  app.use(session({session : uuidv4()}))
 
 
+app.use(session({
+  secret: 'keyboard cat',
+  resave: true,
+  saveUninitialized: true,
+  maxAge: 6000,
+  cookie: { secure: true }
+}))
 
 //Middleware Serving Static Pages from client directory
 // second parameter is an configuration object of how we want
@@ -53,7 +58,8 @@ const PORT =  process.env.PORT || 5000
 app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 'htm']})
 );
 
- 
+ // session id
+
  // Routing Middleware.  
  // login route.
  app.post('/login',body('email').isEmail().withMessage('please provide a valid email'), body('password').isString({min:6, max:10}).withMessage('password is between 6 to 10 characters') , (req, res)=>{
@@ -71,9 +77,11 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
    {
 
     let user = loginService.authenticate(loginUser);
+
+    console.log(req.session.id)
     res.status(200).json({user})
 
-    console.log(user);
+    // console.log(user);
     // res.sendFile(path.join(__dirname, '../client/dashboard.html'))
    }
 
@@ -98,9 +106,7 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
     password
   }
 
-  console.log(newUser);
 
-  console.log(errors);
 
   if(Object.keys(errors).length>0)
   {
@@ -120,23 +126,24 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
   
       
       registerService.createUser(newUser);
-    
+
       res.status(200).json({message:'user added successfully'});
-    }
-  
-    
+    }     
   }
-
-
 
 })
 
 
 //Get all users
 
+
 app.get('/users', (req, res)=>{
-  // res.json({req})
-  
+
+  if(req.session.id)
+  {
+    res.status(200).json(getUsers.getAllUsers())
+    console.log(req.session.id);
+  }    
 })
 
 // Final Middleware 
@@ -148,12 +155,9 @@ app.use((req, res) => {
 });
 
 
-// Register route
-
-
-
 
 // Tell express app to listen for incomming request on a specific PORT
+
 app.listen(PORT, () => {
   console.log(`server started on http://localhost:5000`);
 });
