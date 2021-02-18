@@ -24,20 +24,26 @@ exports.authenticate = (credentials) =>{
     
     let userFound = userExists.findUser( user);
 
+    let checkUser;
     if(userFound)
     {
+      
         let response=checkPassword(userFound, user);
-        console.log(response);
+    
+ 
         if(response)
-        {   
-            return userFound;
+        {  
+            
+           
+            checkUser=true;
         }else
         {
-           return userFound.errors={message: 'password dont match'};
+           checkUser=false;
         }
     }
+    
 
-    return userFound;
+    return checkUser;
 
  } 
  function checkPassword(userFound, user)

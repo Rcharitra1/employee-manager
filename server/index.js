@@ -77,8 +77,18 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
 
     let user = loginService.authenticate(loginUser);
 
+    if(user)
+    {
+      res.sendFile(path.join(__dirname, '../client/dashboard.html'));
+    }
+    else{
+      res.status(400).send('Password dont match')
+    }
+
+
+
     // console.log(req.session.id)
-    res.status(200).json({user})
+    
 
     // console.log(user);
     // res.sendFile(path.join(__dirname, '../client/view/dashboard.ejs'))
@@ -117,8 +127,7 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
     let user = userExists.findUser(newUser);
     if(user!=undefined)
     {
-      errors = {email:'This email already exists'};
-      res.status(400).json({errors});
+      res.status(400).send('This email already exists');
     }
     else
     {
@@ -126,7 +135,8 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
       
       registerService.createUser(newUser);
 
-      res.status(200).json({message:'user added successfully'});
+      res.sendFile(path.join(__dirname, '../client/login.html'))
+      
     }     
   }
 
