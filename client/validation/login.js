@@ -42,9 +42,10 @@ window.addEventListener('load', function(){
         {
             var request = new XMLHttpRequest();
             
-            request.open("POST",'/api/login', true);
+            request.open("POST",'/login', true);
             request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             request.send(`email=${emailInput}&password=${passwordInput}`)
+            console.log(request);
   
             request.onreadystatechange = function ()
             {
@@ -53,8 +54,13 @@ window.addEventListener('load', function(){
                     collection[0].innerHTML=(this.responseText);   
                
                     
+                }else
+                {
+                    form.submit();
                 }
+                
             }
+            
 
         }
         

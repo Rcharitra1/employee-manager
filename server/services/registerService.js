@@ -22,19 +22,19 @@ exports.createUser = (userInfo)=>
     }
 
 
-   becrypt.genSalt(10, (err, salt)=> {
-       becrypt.hash(newUser.password, salt, (err, hash)=>{
+       becrypt.hash(newUser.password, 10, (err, hash)=>{
            if(err)
            {
                throw err;
            }
            newUser.password= hash;
-           console.log(newUser);
+        //    console.log(newUser);
+
            fileService.writeFileContents('../data/users.json', newUser);
-           const users = fileService.getFileContents('../data/users.json');
-           console.log(users);
+        //    const users = fileService.getFileContents('../data/users.json');
+        //    console.log(users);
        })
-   })
+
 }
 
 

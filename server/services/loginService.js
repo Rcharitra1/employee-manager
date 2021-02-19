@@ -22,15 +22,17 @@ exports.authenticate = (credentials) =>{
     
     let user= {email, password};
     
-    let userFound = userExists.findUser( user);
+    let userFound = userExists.findUser(user);
+    // console.log(userFound)
+    // console.log(user);
 
     let checkUser;
     if(userFound)
     {
       
         let response=checkPassword(userFound, user);
+        
     
- 
         if(response)
         {  
             
@@ -49,8 +51,12 @@ exports.authenticate = (credentials) =>{
  function checkPassword(userFound, user)
   {
       let {password}={...user};
+
+    // console.log(userFound);
+    //   let passwordUserFound = userFound.password;
       let response;
       response = becrypt.compareSync(password, userFound.password)
+    //   console.log(response)
       return response;
   }
 

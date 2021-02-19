@@ -61,7 +61,7 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
 
  // Routing Middleware.  
  // login route.
- app.post('/api/login',body('email').isEmail().withMessage('please provide a valid email'), body('password').isLength({min:6, max:10}).withMessage('password is between 6 to 10 characters') , (req, res)=>{
+ app.post('/login',body('email').isEmail().withMessage('please provide a valid email'), body('password').isLength({min:6, max:10}).withMessage('password is between 6 to 10 characters') , (req, res)=>{
    let {email, password}= req.body;
    let loginUser = {
      email,
@@ -77,9 +77,14 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
 
     let user = loginService.authenticate(loginUser);
 
+    // console.log(user);
+
     if(user)
     {
+      // console.log('hit')
       res.sendFile(path.join(__dirname, '../client/dashboard.html'));
+      // res.redirect(path.join(__dirname, '../client/dashboard.html'))
+      // res.redirect('../dashboard.html')
     }
     else{
       res.status(400).send('Password dont match')
@@ -104,7 +109,7 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
 
 //error checking using express - validator
 
- app.post('/api/signup',body('fullname').isLength({min:1, max:30}).withMessage('The name needs to be between 1 and 30 characters'), body('email').isEmail().withMessage('pls provide a valid email'), body('password').isLength({min:6, max:10}).withMessage('provide a password between 6 and 10 characters') , (req, res)=>{
+ app.post('/register',body('fullname').isLength({min:1, max:30}).withMessage('The name needs to be between 1 and 30 characters'), body('email').isEmail().withMessage('pls provide a valid email'), body('password').isLength({min:6, max:10}).withMessage('provide a password between 6 and 10 characters') , (req, res)=>{
  
 
   const {fullname, email, password}=req.body;
@@ -125,17 +130,18 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
   {
 
     let user = userExists.findUser(newUser);
+    // console.log(user);
     if(user!=undefined)
     {
       res.status(400).send('This email already exists');
     }
     else
     {
-  
-      
+   
       registerService.createUser(newUser);
 
-      res.sendFile(path.join(__dirname, '../client/login.html'))
+
+      res.sendFile(path.join(__dirname, '../client/login.html'));
       
     }     
   }

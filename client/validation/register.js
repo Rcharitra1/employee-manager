@@ -2,7 +2,7 @@
 
 
 window.addEventListener('load', function(){
-
+    // const userExists= require('../../server/services/userExists.js')
     const fullname= document.querySelector('#fullname')
     const email= document.querySelector('#email');
     const password=document.querySelector('#password');
@@ -56,9 +56,9 @@ window.addEventListener('load', function(){
         if(inputOK)
         {
             var request = new XMLHttpRequest();
-            request.open("POST",'/api/signup', true);
+            request.open("POST",'/register', true);
             request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            request.send(`fullname=${fullnameInput}}&email=${emailInput}&password=@${passwordInput}`)
+            request.send(`fullname=${fullnameInput}}&email=${emailInput}&password=${passwordInput}`)
 
             request.onreadystatechange = function ()
             {
@@ -67,8 +67,18 @@ window.addEventListener('load', function(){
                     collection[0].innerHTML=(this.responseText);   
                
                     
+                }else{
+                    location.href='../login.html'
                 }
             }
+
+            
+
+ 
+
+            
+
+            
 
         }
        
