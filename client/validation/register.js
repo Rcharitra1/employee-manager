@@ -58,7 +58,7 @@ window.addEventListener('load', function(){
             var request = new XMLHttpRequest();
             request.open("POST",'/register', true);
             request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            request.send(`fullname=${fullnameInput}}&email=${emailInput}&password=${passwordInput}`)
+            request.send(`fullname=${fullnameInput}&email=${emailInput}&password=${passwordInput}`)
 
             request.onreadystatechange = function ()
             {

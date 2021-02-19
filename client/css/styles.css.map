@@ -7,7 +7,8 @@
         "../scss/_navbar.scss",
         "../scss/_page-header.scss",
         "../scss/_form.scss",
-        "../scss/_dashboard.scss"
+        "../scss/_dashboard.scss",
+        "../scss/_users.scss"
     ],
     "names": [],
     "file": "styles.css"
