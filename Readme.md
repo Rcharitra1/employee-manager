@@ -72,3 +72,15 @@ Resourses
 [Common JS Modules](https://blog.tableflip.io/the-difference-between-module-exports-and-exports/#:~:text=exports%20is%20important.&text=What%20this%20means%20is%20that,to%20exports%20and%20not%20module.)
 
 [Writing Middleware For Express](https://expressjs.com/en/guide/writing-middleware.html)
+
+
+
+## Author's Comments
+- This project uses becryptjs for password hashing
+- This project uses express-validator for server side validation
+- This project uses express-session for session management
+- This project uses Nodemon to trace and update changes
+- This project uses Heroku for deployment 
+- This project uses Git for version control
+
+### Link ---> https://employee-manager-rcharitra.herokuapp.com/
