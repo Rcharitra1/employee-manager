@@ -9,6 +9,9 @@ const path = require('path');
 // create an instance of express
 const app = express();
 
+
+const ejs = require('ejs');
+
 //validation
 
 const {body, validationResult}= require('express-validator');
@@ -51,11 +54,17 @@ app.use(session({
   cookie: { secure: true }
 }))
 
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, './views'));
 // Middleware Serving Static Pages from client directory
 // second parameter is an configuration object of how we want
 // the static file server to run.
 app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 'htm']})
 );
+
+
+
 
  // session id
 
@@ -81,22 +90,12 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
 
     if(user)
     {
-      // console.log('hit')
-      res.sendFile(path.join(__dirname, '../client/dashboard.html'));
-      // res.redirect(path.join(__dirname, '../client/dashboard.html'))
-      // res.redirect('../dashboard.html')
+
+      res.render('dashboard', {pageTitle:"Dashboard", pageHeading:"Dashboard Template"})
     }
     else{
       res.status(400).send('Password dont match')
     }
-
-
-
-    // console.log(req.session.id)
-    
-
-    // console.log(user);
-    // res.sendFile(path.join(__dirname, '../client/view/dashboard.ejs'))
    }
 
   

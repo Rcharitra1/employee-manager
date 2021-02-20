@@ -34,7 +34,7 @@ function(e)
             })
         }else
         {
-            let noData = `<div class="noData">No users to display</div>`;
+            let noData = `<div class="noData"><p>No users to display</p></div>`;
 
             parent.insertAdjacentHTML('afterbegin', noData);
         }
