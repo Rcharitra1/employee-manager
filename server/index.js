@@ -9,8 +9,12 @@ const path = require('path');
 // create an instance of express
 const app = express();
 
-
+// create 
 const ejs = require('ejs');
+
+//import cors
+
+const cors = require('cors');
 
 //validation
 
@@ -44,6 +48,7 @@ const PORT =  process.env.PORT || 5000
 //To get access to the name value pairs send in the message Body of POST Request.
  app.use(express.urlencoded({extended:true}))
  app.use(express.json())
+ app.use(cors());
 
 
 app.use(session({
@@ -97,9 +102,7 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
       res.status(400).send('Password dont match')
     }
    }
-
-  
-    
+      
  })
 
 
