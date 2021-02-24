@@ -68,7 +68,7 @@ window.addEventListener('load', function(){
                
                     
                 }else{
-                    location.href='../login.html'
+                    location.href='../login'
                 }
             }
 

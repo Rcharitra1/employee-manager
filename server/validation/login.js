@@ -4,7 +4,7 @@ window.addEventListener('load', function(){
     const password=document.querySelector('#password');
     let collection = document.querySelectorAll('.warning');
     const form = document.querySelector('#login');
-    // console.log(form);
+    console.log(form);
     form.addEventListener('submit', (e)=>{
         e.preventDefault();
         collection[0].innerHTML="";

@@ -75,6 +75,12 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
 
  // Routing Middleware.  
  // login route.
+
+
+ app.get('/login', (req, res)=>
+ {
+   res.render('login')
+ })
  app.post('/login',body('email').isEmail().withMessage('please provide a valid email'), body('password').isLength({min:6, max:10}).withMessage('password is between 6 to 10 characters') , (req, res)=>{
    let {email, password}= req.body;
    let loginUser = {
@@ -143,7 +149,8 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
       registerService.createUser(newUser);
 
 
-      res.sendFile(path.join(__dirname, '../client/login.html'));
+      res.render('login', {title:'login'})
+      
       
     }     
   }
