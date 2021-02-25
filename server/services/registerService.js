@@ -16,7 +16,7 @@ exports.createUser = (userInfo)=>
 
     const newUser = {
         id : uuidv4(),
-        name: fullname,
+        username: fullname,
         email: email,
         password: password
     }

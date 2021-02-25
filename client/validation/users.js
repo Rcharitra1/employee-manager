@@ -26,7 +26,7 @@ function(e)
                 let template = `
                 <div data-id=${obj.id}>
                 <img src="../assets/svgs/user.svg"/>
-                <p>Name: ${obj.name}</p>
+                <p>Name: ${obj.username}</p>
                 <p>Email: ${obj.email}</p>
                 </div>
                 `
