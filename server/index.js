@@ -34,9 +34,16 @@ const loginService = require('./services/loginService.js');
 
 const getUsers = require('../server/services/getUsers.js')
 
-//get express-session
+//get cookie-session
 
-const session = require('express-session');
+const cookSession = require('cookie-session');
+
+//for unique id for session
+
+const {v4: uuid}=require('uuid');
+
+
+
  
 // read the value of PORT NODE_EVN variable in the .env file
 // when the index.js file starts up this file is read in and
@@ -49,19 +56,26 @@ const PORT =  process.env.PORT || 5000
  app.use(express.urlencoded({extended:true}))
  app.use(express.json())
  app.use(cors());
+ app.use(cookSession({
+  name:"session",
+  keys:[uuid(), uuid()]
+  }))
+
+  
 
 
-app.use(session({
-  secret: 'keyboard cat',
-  resave: true,
-  saveUninitialized: true,
-  maxAge: 6000,
-  cookie: { secure: true }
-}))
+  //set isValid to false
+
+
+  
+  
+
+
 
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, './views'));
+
 // Middleware Serving Static Pages from client directory
 // second parameter is an configuration object of how we want
 // the static file server to run.
@@ -87,6 +101,8 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
      email,
      password
    }
+
+   console.log(req.session.isValid)
    const {errors}=validationResult(req);
 
    if(Object.keys(errors).length>0)
@@ -95,20 +111,34 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
    }else
    {
 
+
     let user = loginService.authenticate(loginUser);
 
-    // console.log(user);
 
     if(user)
     {
+      if(!req.session.isValid){
+        req.session.isValid=true;
+      }
 
-      res.render('dashboard', {pageTitle:"Dashboard", pageHeading:"Dashboard Template"})
+
+      res.redirect('/dashboard');
     }
     else{
       res.status(400).send('Password dont match')
     }
    }
       
+ })
+
+ app.get('/dashboard', (req, res)=>{
+   if(req.session.isValid)
+   {
+     res.render('dashboard');
+   }else
+   {
+     res.redirect('/login');
+   }
  })
 
 

@@ -406,6 +406,7 @@ th {
           box-shadow: 0 0 5px 0 #5cb85c;
   padding: 1rem;
   margin: 1rem;
+  min-width: 350px;
 }
 
 .content div p:first-of-type {
