@@ -8,7 +8,7 @@
 - This project uses Heroku for deployment 
 - This project uses Git for version control
 
-## Functions 
+## Further Information 
 - services
     - fileService for reading or writing a user record
     - getUsers gets all users 
