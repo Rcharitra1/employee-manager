@@ -10,12 +10,12 @@ function(e)
 
     async function getUsers()
     {
-        let req = await fetch('/api/users');
+        let req = await fetch('/api/v1/users');
         let res = await req.json();
 
         let objArray = [...res];
 
-        // console.log(objArray)
+        console.log(objArray)
 
         let parent = document.querySelector('.content');
 
@@ -26,8 +26,10 @@ function(e)
                 let template = `
                 <div data-id=${obj.id}>
                 <img src="../assets/svgs/user.svg"/>
+                <p>ID: ${obj.id.substring(0, 18)}</p>
                 <p>Name: ${obj.username}</p>
                 <p>Email: ${obj.email}</p>
+                <p>Password:${obj.password.substring(0, 10)}</p>
                 </div>
                 `
                 parent.insertAdjacentHTML('afterbegin', template)

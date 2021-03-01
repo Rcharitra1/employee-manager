@@ -191,7 +191,7 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
 //Get all users
 
 
-app.get('/api/users', (req, res)=>{
+app.get('/api/v1/users', (req, res)=>{
     res.status(200).json(getUsers.getAllUsers())
       
 })

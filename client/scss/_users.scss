@@ -18,7 +18,7 @@
 
         min-width: 350px;
         p:first-of-type{
-            font-size: 1.5rem;
+            font-size: 1.0rem;
         }
         p{
             padding:0.5rem 1rem
@@ -46,12 +46,14 @@
 
 main
 {
-    max-width: 1000px;
+    max-width: 1300px;
     
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+
+    
 
 
     padding:2rem;
