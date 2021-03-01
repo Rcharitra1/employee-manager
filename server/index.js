@@ -102,7 +102,7 @@ app.use(express.static(path.join(__dirname, "../client"), {extensions: ["html", 
      password
    }
 
-   console.log(req.session.isValid)
+  //  console.log(req.session.isValid)
    const {errors}=validationResult(req);
 
    if(Object.keys(errors).length>0)
